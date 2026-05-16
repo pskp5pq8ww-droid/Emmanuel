@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createGallerySlug } from "../../src/lib/galleries/slug";
 import { hashPin } from "../../src/lib/security/pin";
 import { createSupabaseAdminClient } from "../../src/lib/supabase/admin";
-import { getMissingSupabaseEnv, logSupabaseEnvStatus } from "../../src/lib/supabase/env";
+import { getMissingSupabaseEnv, logSupabaseEnvStatus, debugSupabaseEnv } from "../../src/lib/supabase/env";
 import type { Database } from "../../src/lib/supabase/types";
 
 type ClientInsert = Database["public"]["Tables"]["clients"]["Insert"];
@@ -37,6 +37,9 @@ export async function createClientGallery(
   _prevState: AdminCreateState,
   formData: FormData,
 ): Promise<AdminCreateState> {
+  // Safe debug — no secret values printed, shows existence only
+  console.log("[createClientGallery] env debug", debugSupabaseEnv());
+
   try {
     const name = value(formData, "name");
     const email = value(formData, "email").toLowerCase();

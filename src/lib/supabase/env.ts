@@ -10,11 +10,19 @@ function clean(value: string | undefined) {
 }
 
 export function getSupabaseUrl() {
-  return clean(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  // NEXT_PUBLIC_ prefix is required for client-side access.
+  // SUPABASE_URL (without prefix) works as server-side fallback only.
+  return (
+    clean(process.env.NEXT_PUBLIC_SUPABASE_URL) ||
+    clean(process.env.SUPABASE_URL)
+  );
 }
 
 export function getSupabasePublishableKey() {
-  return clean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) || clean(process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY);
+  return (
+    clean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) ||
+    clean(process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
+  );
 }
 
 export function getSupabasePublicKeyName(): SupabaseEnvStatus["publicKeyName"] {
@@ -68,4 +76,18 @@ export function logSupabaseEnvStatus(context: string, includeServiceRole = false
       hasServiceRoleKey: status.serviceRoleKey,
     });
   }
+}
+
+/** Safe debug — shows existence only, never prints secret values. */
+export function debugSupabaseEnv() {
+  return {
+    NEXT_PUBLIC_SUPABASE_URL: {
+      exists: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
+      prefix: process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 12) || "(empty)",
+    },
+    SUPABASE_URL_fallback: Boolean(process.env.SUPABASE_URL),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: Boolean(process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY),
+    SUPABASE_SERVICE_ROLE_KEY: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+  };
 }
