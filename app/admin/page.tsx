@@ -1,7 +1,11 @@
+import { redirect } from "next/navigation";
 import CreateGalleryForm from "./create-gallery-form";
+import { hasAdminSession } from "../../src/lib/admin-auth/session";
 import { createSupabaseAdminClient } from "../../src/lib/supabase/admin";
 
 export default async function AdminPage() {
+  if (!(await hasAdminSession())) redirect("/admin-login");
+
   const supabase = createSupabaseAdminClient();
   const { data: galleries } = await supabase
     .from("galleries")
