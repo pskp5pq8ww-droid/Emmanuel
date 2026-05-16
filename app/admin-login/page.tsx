@@ -1,20 +1,34 @@
-import LoginForm from "./login-form";
-
 export default function AdminLoginPage() {
   return (
-    <main className="page">
-      <section className="portal-row" id="portal">
-        <div className="login-panel">
-          <img className="logo-mark" src="/assets/ogo-er-black.png" alt="ER" style={{ width: 52, marginBottom: 28 }} />
-          <div className="kicker">Admin Access</div>
-          <h2>Private Dashboard</h2>
-          <p>Enter your admin credentials.</p>
-          <LoginForm />
-        </div>
-        <div className="brand-panel">
-          <div className="device-card"><img className="logo-mark" src="/assets/ogo-er-black.png" alt="ER" /></div>
-        </div>
-      </section>
+    <main
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "sans-serif",
+        background: "#f9f9f9",
+      }}
+    >
+      <div style={{ textAlign: "center", padding: 48 }}>
+        <img
+          src="/assets/ogo-er-black.png"
+          alt="Emmanuel Rojas"
+          style={{ width: 64, marginBottom: 32, opacity: 0.8 }}
+        />
+        <h1 style={{ fontSize: 22, fontWeight: 600, marginBottom: 12, color: "#111" }}>
+          Acceso temporalmente deshabilitado
+        </h1>
+        <p style={{ color: "#666", maxWidth: 340, margin: "0 auto 28px" }}>
+          El panel de administración estará disponible próximamente.
+        </p>
+        <a
+          href="/"
+          style={{ color: "#111", fontSize: 14, textDecoration: "underline" }}
+        >
+          Volver al inicio
+        </a>
+      </div>
     </main>
   );
 }
