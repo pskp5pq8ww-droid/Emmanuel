@@ -21,6 +21,7 @@ export type Database = {
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["clients"]["Insert"]>;
+        Relationships: [];
       };
       galleries: {
         Row: {
@@ -42,6 +43,15 @@ export type Database = {
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["galleries"]["Insert"]>;
+        Relationships: [
+          {
+            foreignKeyName: "galleries_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       gallery_images: {
         Row: {
@@ -67,6 +77,15 @@ export type Database = {
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["gallery_images"]["Insert"]>;
+        Relationships: [
+          {
+            foreignKeyName: "gallery_images_gallery_id_fkey";
+            columns: ["gallery_id"];
+            isOneToOne: false;
+            referencedRelation: "galleries";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       admin_users: {
         Row: {
@@ -78,6 +97,7 @@ export type Database = {
           created_at?: string;
         };
         Update: never;
+        Relationships: [];
       };
     };
     Views: Record<string, never>;

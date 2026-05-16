@@ -4,6 +4,10 @@ import { revalidatePath } from "next/cache";
 import { createGallerySlug } from "../../src/lib/galleries/slug";
 import { hashPin } from "../../src/lib/security/pin";
 import { createSupabaseAdminClient } from "../../src/lib/supabase/admin";
+import type { Database } from "../../src/lib/supabase/types";
+
+type ClientInsert = Database["public"]["Tables"]["clients"]["Insert"];
+type GalleryInsert = Database["public"]["Tables"]["galleries"]["Insert"];
 
 export type AdminCreateState = {
   ok: boolean;
@@ -35,14 +39,16 @@ export async function createClientGallery(
   const supabase = createSupabaseAdminClient();
   const pinHash = await hashPin(pin);
 
+  const clientPayload: ClientInsert = {
+    name,
+    email: email || null,
+    username: username || null,
+    pin_hash: pinHash,
+  };
+
   const { data: client, error: clientError } = await supabase
     .from("clients")
-    .insert({
-      name,
-      email: email || null,
-      username: username || null,
-      pin_hash: pinHash,
-    })
+    .insert(clientPayload)
     .select("id")
     .single();
 
@@ -53,12 +59,14 @@ export async function createClientGallery(
   const baseSlug = createGallerySlug(title);
   const slug = `${baseSlug}-${Date.now().toString(36)}`;
 
-  const { error: galleryError } = await supabase.from("galleries").insert({
+  const galleryPayload: GalleryInsert = {
     client_id: client.id,
     title,
     slug,
     is_active: true,
-  });
+  };
+
+  const { error: galleryError } = await supabase.from("galleries").insert(galleryPayload);
 
   if (galleryError) {
     return { ok: false, message: galleryError.message };

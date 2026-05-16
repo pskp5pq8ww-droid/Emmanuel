@@ -15,10 +15,11 @@ export default function HomePortal() {
       "button,.primary-btn,.ghost-btn,.text-btn,.icon-btn",
     );
     const cleanups = Array.from(controls).map((control) => {
-      const onPointerDown = (event: PointerEvent) => {
+      const onPointerDown: EventListener = (event) => {
+        const pointerEvent = event as PointerEvent;
         const rect = control.getBoundingClientRect();
-        control.style.setProperty("--x", `${event.clientX - rect.left}px`);
-        control.style.setProperty("--y", `${event.clientY - rect.top}px`);
+        control.style.setProperty("--x", `${pointerEvent.clientX - rect.left}px`);
+        control.style.setProperty("--y", `${pointerEvent.clientY - rect.top}px`);
         control.classList.remove("is-pressed");
         void control.offsetWidth;
         control.classList.add("is-pressed");
