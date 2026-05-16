@@ -23,12 +23,27 @@ export default function CreateGalleryForm() {
         <input id="username" name="username" placeholder="mariajohn" />
       </div>
       <div className="field">
-        <label htmlFor="pin">Private PIN</label>
+        <label htmlFor="pin">Client PIN</label>
         <input id="pin" name="pin" type="password" inputMode="numeric" placeholder="4827" required />
       </div>
       <div className="field">
         <label htmlFor="title">Gallery title</label>
         <input id="title" name="title" placeholder="Wedding - Maria & John" required />
+      </div>
+      <div className="field">
+        <label htmlFor="event_date">Event date</label>
+        <input id="event_date" name="event_date" type="date" />
+      </div>
+      <div className="field">
+        <label htmlFor="description">Description</label>
+        <textarea id="description" name="description" placeholder="Optional session notes" />
+      </div>
+      <div className="field">
+        <label htmlFor="is_active">Status</label>
+        <select id="is_active" name="is_active" defaultValue="active">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
       </div>
       <button className="primary-btn" type="submit" disabled={pending}>
         {pending ? "Creating..." : "Create client gallery"}

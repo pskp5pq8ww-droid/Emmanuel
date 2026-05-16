@@ -30,6 +30,8 @@ export type Database = {
           title: string;
           slug: string;
           cover_image_url: string | null;
+          event_date: string | null;
+          description: string | null;
           is_active: boolean;
           created_at: string;
         };
@@ -39,6 +41,8 @@ export type Database = {
           title: string;
           slug: string;
           cover_image_url?: string | null;
+          event_date?: string | null;
+          description?: string | null;
           is_active?: boolean;
           created_at?: string;
         };
