@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createGallerySlug } from "../../src/lib/galleries/slug";
 import { hashPin } from "../../src/lib/security/pin";
 import { createSupabaseAdminClient } from "../../src/lib/supabase/admin";
+import { getMissingSupabaseEnv, logSupabaseEnvStatus } from "../../src/lib/supabase/env";
 import type { Database } from "../../src/lib/supabase/types";
 
 type ClientInsert = Database["public"]["Tables"]["clients"]["Insert"];
@@ -38,6 +39,12 @@ export async function createClientGallery(
 
     if (pin.length < 4) {
       return { ok: false, message: "El PIN debe tener al menos 4 caracteres." };
+    }
+
+    const missingEnv = getMissingSupabaseEnv(true);
+    if (missingEnv.length) {
+      logSupabaseEnvStatus("create-client-gallery", true);
+      return { ok: false, message: `Missing environment variables: ${missingEnv.join(", ")}` };
     }
 
     const supabase = createSupabaseAdminClient();
@@ -96,6 +103,7 @@ export async function createClientGallery(
     revalidatePath("/admin");
     return { ok: true, message: `Galeria creada. Ruta: /gallery/${slug}` };
   } catch (error) {
+    console.error("[createClientGallery] Supabase action error", error);
     return {
       ok: false,
       message: error instanceof Error ? error.message : "Error inesperado creando la galeria.",

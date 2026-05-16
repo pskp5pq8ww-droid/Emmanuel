@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import CreateGalleryForm from "./create-gallery-form";
 import { hasAdminSession } from "../../src/lib/admin-auth/session";
 import { createSupabaseAdminClient } from "../../src/lib/supabase/admin";
-import { getMissingSupabaseEnv } from "../../src/lib/supabase/env";
+import { getMissingSupabaseEnv, logSupabaseEnvStatus } from "../../src/lib/supabase/env";
 
 type GalleryRow = {
   id: string;
@@ -25,6 +25,7 @@ export default async function AdminPage() {
   let totalGalleries = 0;
 
   if (missingEnv.length) {
+    logSupabaseEnvStatus("admin-page", true);
     dashboardError = `Missing environment variables: ${missingEnv.join(", ")}`;
   } else {
     try {
@@ -48,6 +49,7 @@ export default async function AdminPage() {
         galleries = (galleriesResult.data ?? []) as unknown as GalleryRow[];
       }
     } catch (error) {
+      console.error("[AdminPage] Supabase dashboard error", error);
       dashboardError = error instanceof Error ? error.message : "Unexpected Supabase dashboard error.";
     }
   }
