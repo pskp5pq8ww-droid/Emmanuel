@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preview": "npx wrangler pages dev out",
+    "deploy": "npm run build && npx wrangler pages deploy out --project-name emmanuel-rojas-studio-portal"
   },
   "dependencies": {
     "next": "^15.3.2",
