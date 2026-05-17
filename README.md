@@ -192,3 +192,4 @@ npm run lint   # Linter
 | `/admin` | GET | Dashboard (requiere sesión) |
 | `/api/admin/upload` | POST | Sube imágenes a una galería (multipart/form-data) |
 | `/api/files/[...path]` | GET | Sirve imágenes del servidor |
+# emma2.0
