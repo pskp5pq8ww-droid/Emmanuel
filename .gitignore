@@ -11,5 +11,12 @@ dist/
 
 .DS_Store
 .claude/worktrees/
+.claude/skills/
 .agents/skills/
 docs/*.pdf
+
+# Runtime data — do not commit content (keep folder via .gitkeep)
+data/*
+!data/.gitkeep
+uploads/*
+!uploads/.gitkeep

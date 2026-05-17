@@ -1,4 +1,10 @@
-export default function AdminLoginPage() {
+import { redirect } from "next/navigation";
+import LoginForm from "./login-form";
+import { hasAdminSession } from "../../src/lib/admin-auth/session";
+
+export default async function AdminLoginPage() {
+  if (await hasAdminSession()) redirect("/admin");
+
   return (
     <main
       style={{
@@ -8,26 +14,29 @@ export default function AdminLoginPage() {
         justifyContent: "center",
         fontFamily: "sans-serif",
         background: "#f9f9f9",
+        padding: 24,
       }}
     >
-      <div style={{ textAlign: "center", padding: 48 }}>
+      <div style={{ textAlign: "center", maxWidth: 360, width: "100%" }}>
         <img
           src="/assets/ogo-er-black.png"
           alt="Emmanuel Rojas"
-          style={{ width: 64, marginBottom: 32, opacity: 0.8 }}
+          style={{ width: 56, marginBottom: 28, opacity: 0.85 }}
         />
-        <h1 style={{ fontSize: 22, fontWeight: 600, marginBottom: 12, color: "#111" }}>
-          Acceso temporalmente deshabilitado
+        <h1 style={{ fontSize: 22, fontWeight: 600, marginBottom: 8, color: "#111" }}>
+          Admin access
         </h1>
-        <p style={{ color: "#666", maxWidth: 340, margin: "0 auto 28px" }}>
-          El panel de administración estará disponible próximamente.
+        <p style={{ color: "#666", marginBottom: 28, fontSize: 14 }}>
+          Ingresa tus credenciales para acceder al dashboard.
         </p>
-        <a
-          href="/"
-          style={{ color: "#111", fontSize: 14, textDecoration: "underline" }}
-        >
-          Volver al inicio
-        </a>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <LoginForm />
+        </div>
+        <p style={{ marginTop: 32 }}>
+          <a href="/" style={{ color: "#666", fontSize: 13, textDecoration: "underline" }}>
+            Volver al inicio
+          </a>
+        </p>
       </div>
     </main>
   );

@@ -6,11 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "preview": "npx wrangler pages dev out",
-    "deploy": "npm run build && npx wrangler pages deploy out --project-name emmanuel-rojas-studio-portal"
+    "lint": "next lint"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "next": "^15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

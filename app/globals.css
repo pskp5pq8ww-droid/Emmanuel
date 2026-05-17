@@ -218,7 +218,7 @@ h1{
 .device-card .logo-mark{width:110px}
 .section-head{
   display:flex;
-  align-items:end;
+  align-items:flex-end;
   justify-content:space-between;
   gap:22px;
   margin-bottom:30px;
@@ -282,7 +282,7 @@ h1{
 .gallery-head{
   display:flex;
   justify-content:space-between;
-  align-items:end;
+  align-items:flex-end;
   gap:20px;
   margin-bottom:28px;
 }
@@ -347,11 +347,11 @@ h1{
   display:grid;
   grid-template-columns:minmax(320px,.9fr) minmax(280px,.55fr);
   gap:22px;
-  align-items:start;
+  align-items:flex-start;
 }
 .project-list{display:grid;gap:12px}
 .project-card{padding:18px}
-.project-card header{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:14px}
+.project-card header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
 .project-card p{color:var(--muted);margin:6px 0 0}
 .chip{
   border:1px solid var(--line);
